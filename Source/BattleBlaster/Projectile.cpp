@@ -43,6 +43,14 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 	}
 	Destroy();
 }
+//void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
+//{
+//	if (OtherActor)
+//	{
+//		UE_LOG(LogTemp, Display, TEXT("Projectile hit: %s"), *OtherActor->GetActorNameOrLabel());
+//	}
+//}
+
 
 	
 

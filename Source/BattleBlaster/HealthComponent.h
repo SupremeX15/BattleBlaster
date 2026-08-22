@@ -4,30 +4,32 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "Health.generated.h"
+#include "HealthComponent.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class BATTLEBLASTER_API UHealth : public UActorComponent
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
+class BATTLEBLASTER_API UHealthComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	// Sets default values for this component's properties
-	UHealth();
+	UHealthComponent();
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health")
+	UPROPERTY(EditAnywhere)
 	float MaxHealth = 100.0f;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Health")
+
+	UPROPERTY(VisibleAnywhere)
 	float Health;
 
-
+	UFUNCTION()
+	void OnDamageTaken(AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
 };
