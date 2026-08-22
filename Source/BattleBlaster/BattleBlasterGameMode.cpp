@@ -1,6 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "BattleBlasterGameMode.h"
 
 #include "Kismet/GameplayStatics.h"
@@ -24,7 +21,7 @@ void ABattleBlasterGameMode::BeginPlay()
 			UE_LOG(LogTemp, Display, TEXT("GameMode: Failed to find the tank actor!"));
 		}
 	}
-	
+
 	int32 LoopIndex = 0;
 	while (LoopIndex < TowerCount)
 	{
@@ -38,11 +35,32 @@ void ABattleBlasterGameMode::BeginPlay()
 				UE_LOG(LogTemp, Display, TEXT("%s setting the tank variable!"), *Tower->GetActorNameOrLabel());
 			}
 		}
+
 		LoopIndex++;
 	}
-
-
-
-
 }
 
+void ABattleBlasterGameMode::ActorDied(AActor* DeadActor)
+{
+	if (DeadActor == Tank)
+	{
+		// Tank->HandleDestruction();
+		UE_LOG(LogTemp, Display, TEXT("Tank died, defeat!"));
+	}
+	else
+	{
+		ATower* DeadTower = Cast<ATower>(DeadActor);
+		if (DeadTower)
+		{
+			// DeadTower->HandleDestruction();
+			UE_LOG(LogTemp, Display, TEXT("A tower just died!"));
+			DeadTower->Destroy();
+
+			TowerCount--;
+			if (TowerCount == 0)
+			{
+				UE_LOG(LogTemp, Display, TEXT("All towers are dead, victory!"));
+			}
+		}
+	}
+}
