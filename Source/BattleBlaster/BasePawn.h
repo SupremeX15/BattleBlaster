@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Components/CapsuleComponent.h"
+#include "Projectile.h"
 #include "BasePawn.generated.h"
 
 UCLASS()
@@ -30,6 +31,9 @@ public:
 
 	
 	void RotateTurret(FVector LookAtTarget);
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AProjectile> ProjectileClass;
+
 
 	void Fire();	
 
