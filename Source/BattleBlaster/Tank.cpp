@@ -21,7 +21,8 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
+	PlayerController = Cast<APlayerController>(Controller);
+	if (PlayerController)
 	{
 		if (ULocalPlayer* LocalPlayer = PlayerController->GetLocalPlayer())
 		{
@@ -37,7 +38,7 @@ void ATank::BeginPlay()
 void ATank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	APlayerController* PlayerController = Cast<APlayerController>(GetController());
+
 	if (PlayerController)
 	{
 		FHitResult HitResult;
@@ -85,7 +86,27 @@ void ATank::TurnInput(const FInputActionValue& Value)
 
 void ATank::HandleDestruction()
 {
-	UE_LOG(LogTemp, Display, TEXT("Tank HandleDestruction!"));
+	SetActorHiddenInGame(true);
+	SetActorTickEnabled(false);
+	SetPlayerEnabled(false);
+
+	IsAlive = false;
 }
+
+void ATank::SetPlayerEnabled(bool Enabled)
+{
+	if (PlayerController)
+	{
+		if (Enabled)
+		{
+			EnableInput(PlayerController);
+		}
+		else
+		{
+			DisableInput(PlayerController);
+		}
+	}
+}
+
 
 
