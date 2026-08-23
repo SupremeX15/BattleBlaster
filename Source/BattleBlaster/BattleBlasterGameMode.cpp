@@ -1,3 +1,6 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+
 #include "BattleBlasterGameMode.h"
 
 #include "Kismet/GameplayStatics.h"
@@ -43,11 +46,10 @@ void ABattleBlasterGameMode::BeginPlay()
 void ABattleBlasterGameMode::ActorDied(AActor* DeadActor)
 {
 	bool IsGameOver = false;
-	bool IsVictory = false;
+	
 
 	if (DeadActor == Tank)
 	{
-		// Tank->HandleDestruction();
 		Tank->HandleDestruction();
 		IsGameOver = true;
 	}
@@ -56,7 +58,6 @@ void ABattleBlasterGameMode::ActorDied(AActor* DeadActor)
 		ATower* DeadTower = Cast<ATower>(DeadActor);
 		if (DeadTower)
 		{
-			// DeadTower->HandleDestruction();
 			DeadTower->HandleDestruction();
 
 			TowerCount--;
@@ -73,16 +74,23 @@ void ABattleBlasterGameMode::ActorDied(AActor* DeadActor)
 		FString GameOverString = IsVictory ? "Victory!" : "Defeat!";
 
 		UE_LOG(LogTemp, Display, TEXT("Game over: %s"), *GameOverString);
-	
-	FTimerHandle GameOverTimerHandle;
-	GetWorldTimerManager().SetTimer(GameOverTimerHandle, this, &ABattleBlasterGameMode::OnGameOverTimerTimeout, GameOverDelay, false);
 
+		FTimerHandle GameOverTimerHandle;
+		GetWorldTimerManager().SetTimer(GameOverTimerHandle, this, &ABattleBlasterGameMode::OnGameOverTimerTimeout, GameOverDelay, false);
 	}
 }
-
 
 void ABattleBlasterGameMode::OnGameOverTimerTimeout()
 {
 	FString CurrentLevelName = UGameplayStatics::GetCurrentLevelName(GetWorld());
-	UGameplayStatics::OpenLevel(GetWorld(), *CurrentLevelName);
+
+	if (IsVictory)
+	{
+		// Load the next level
+	}
+	else
+	{
+		// Reload the current level
+		UGameplayStatics::OpenLevel(GetWorld(), *CurrentLevelName);
+	}
 }
