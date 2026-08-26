@@ -41,6 +41,10 @@ public:
 	UPROPERTY(EditAnywhere)
 	USoundBase* DeathSound;
 
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UCameraShakeBase> DeathCameraShakeClass;
+
+
 	void Fire();	
 	void HandleDestruction();
 
