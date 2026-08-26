@@ -52,6 +52,7 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 
 	}
 	Destroy();
+	//issue resolved
 }
 
 
