@@ -30,14 +30,16 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* ProjectileSpawnPoint;
 
-	
 	void RotateTurret(FVector LookAtTarget);
+	
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<AProjectile> ProjectileClass;
+	
 	UPROPERTY(EditAnywhere)
 	UNiagaraSystem* DeathParticles;
 
-
+	UPROPERTY(EditAnywhere)
+	USoundBase* DeathSound;
 
 	void Fire();	
 	void HandleDestruction();

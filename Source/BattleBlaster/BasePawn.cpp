@@ -1,7 +1,6 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "BasePawn.h"
+
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ABasePawn::ABasePawn()
@@ -42,7 +41,6 @@ void ABasePawn::Fire()
 	FVector SpawnLocation = ProjectileSpawnPoint->GetComponentLocation();
 	FRotator SpawnRotation = ProjectileSpawnPoint->GetComponentRotation();
 
-
 	AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, SpawnLocation, SpawnRotation);
 	if (Projectile)
 	{
@@ -56,6 +54,11 @@ void ABasePawn::HandleDestruction()
 	{
 		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), DeathParticles, GetActorLocation(), GetActorRotation());
 	}
-
+	if (DeathSound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), DeathSound, GetActorLocation());
+		
+	}
 }
+
 
